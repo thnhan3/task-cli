@@ -21,7 +21,12 @@ var addTaskCommand = &cobra.Command{
 func addTask(taskContent string) {
 	tasks, taskCount, err := readJsonFile()
 	if err != nil {
-		return
+		createFile()
+		panic("file not found. New file created.")
+	}
+
+	if tasks == nil {
+		tasks = []Task{}
 	}
 
 	task := Task{taskCount + 1, taskContent, TODO, time.Now(), time.Now()}

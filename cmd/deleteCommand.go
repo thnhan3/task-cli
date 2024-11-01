@@ -24,6 +24,7 @@ var deleteCommand = &cobra.Command{
 
 func deleteTask(taskId int) {
 	tasks, _, err := readJsonFile()
+	isDeleted := false
 	if err != nil {
 		panic(err)
 	}
@@ -34,5 +35,8 @@ func deleteTask(taskId int) {
 			writeJsonFile(tasks)
 			return
 		}
+	}
+	if isDeleted == false {
+		fmt.Println("Invalid Id", taskId)
 	}
 }

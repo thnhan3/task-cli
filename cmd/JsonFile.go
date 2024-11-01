@@ -3,8 +3,8 @@ package cmd
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"os"
-	"time"
 
 	"github.com/spf13/cobra"
 )
@@ -31,34 +31,42 @@ func createFile() {
 		return
 	}
 	defer file.Close()
-	task1 := Task{1, "Task 1", TODO, time.Now(), time.Now()}
-
-	err = json.NewEncoder(file).Encode(task1)
 	if err != nil {
 		fmt.Println("Error encoding task:", err)
 		return
 	}
 
-	fmt.Println("create ok")
+	fmt.Println("create task.json")
 
 }
-
 func readJsonFile() (tasks []Task, taskCount int, err error) {
 	file, err := os.Open("task.json")
 	if err != nil {
-		fmt.Println("Error opening file:", err)
-		return
+		if os.IsNotExist(err) {
+			return []Task{}, 0, nil
+		}
+		return nil, 0, err
 	}
+
 	defer file.Close()
 
-	var task []Task
-	err = json.NewDecoder(file).Decode(&task)
+	// Read the file contents into a byte slice
+	data, err := io.ReadAll(file)
 	if err != nil {
-		fmt.Println("Error decoding task:", err)
-		return
+		return nil, 0, err
 	}
 
-	return task, len(task), err
+	if len(data) == 0 {
+		return []Task{}, 0, nil
+	}
+
+	// Unmarshal the JSON data from the byte slice
+	err = json.Unmarshal(data, &tasks)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	return tasks, len(tasks), nil
 }
 
 func writeJsonFile(tasks []Task) {
