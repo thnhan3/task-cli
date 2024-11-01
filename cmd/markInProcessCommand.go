@@ -16,7 +16,6 @@ var markInProcessCommand = &cobra.Command{
 		if err != nil {
 			panic(err)
 		}
-		fmt.Println(taskId)
 		markInProcessById(taskId)
 	},
 }

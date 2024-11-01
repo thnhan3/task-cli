@@ -17,12 +17,12 @@ var updateCommand = &cobra.Command{
 		taskId, _ := strconv.Atoi(args[0])
 
 		updateTask(taskId, newContent)
-		fmt.Printf("%sTask %d updated%s", constant.ColorBlue, taskId, constant.ColorReset)
 	},
 }
 
 func updateTask(taskId int, newContent string) {
 	tasks, _, err := readJsonFile()
+	isUpdated := false
 	if err != nil {
 		return
 	}
@@ -31,7 +31,11 @@ func updateTask(taskId int, newContent string) {
 		if task.ID == taskId {
 			tasks[i].Content = newContent
 			writeJsonFile(tasks)
+			fmt.Printf("%sTask %d updated%s", constant.ColorBlue, taskId, constant.ColorReset)
 			return
 		}
+	}
+	if isUpdated == false {
+		fmt.Println("Invalid Id", taskId)
 	}
 }
