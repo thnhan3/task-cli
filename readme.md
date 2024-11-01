@@ -79,8 +79,3 @@ go build -ldflags="-s -w" -o task-cli main.go
 - Github :`@thnhan3`
 
 <p id="footer" align="center" style="padding:20px; margin-top:30px;rotate: calc(45deg); color: green; font-size: 2rem;">Have A nice day</p>
-<style>
-    #footer:hover {
-        rotate: calc(0deg) !important;
-    }
-</style>
