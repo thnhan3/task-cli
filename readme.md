@@ -2,7 +2,7 @@
 
 Task Tracker CLI base on Requirement in roadmap.sh, implement with golang + cobra
 
-- use cobra for fast development because I not have too much time to do this.
+Project Url: [Task Tracker CLI Requirement](https://roadmap.sh/projects/task-tracker)
 
 ## Main Feature
 
